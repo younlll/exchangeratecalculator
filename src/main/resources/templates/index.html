@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>환율계산</title>
+</head>
+<body>
+<h1>환율계산</h1>
+<div>
+    <p>송금국가: 미국(USD)</p>
+</div>
+<div>
+    수취국가:
+    <select name="recipient_country" id="recipient_country">
+        <option selected value="KRW">한국(KRW)</option>
+        <option value="JPY">일본(JPY)</option>
+        <option value="PHP">필리핀(PHP)</option>
+    </select>
+</div>
+<div>
+    환율: <span id="exchange_rate"></span>
+</div>
+<div>
+    송금액: <span><input type="number" id="remittance_amount"></span>USD
+</div>
+<div>
+    <button type="button">환율 계산</button>
+</div>
+</body>
+</html>
