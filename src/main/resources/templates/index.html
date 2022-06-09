@@ -30,6 +30,9 @@
 </body>
 <script>
 $(window).on('load', getExchangeRate());
+$('#recipientCountry').on('change', function(){
+    getExchangeRate();
+});
 
 function getExchangeRate() {
     var recipientCountry = $('#recipientCountry').val();
