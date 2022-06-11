@@ -25,13 +25,19 @@
     송금액: <span><input type="number" id="remittanceAmount"></span>USD
 </div>
 <div>
-    <button type="button">환율 계산</button>
+    <button type="button" id="exchangeRateCalculator">환율 계산</button>
+</div>
+<div id="remittanceResult">
 </div>
 </body>
 <script>
 $(window).on('load', getExchangeRate());
 $('#recipientCountry').on('change', function(){
     getExchangeRate();
+});
+
+$('#exchangeRateCalculator').on('click', function(){
+    getRemittanceResult();
 });
 
 function getExchangeRate() {
@@ -54,5 +60,30 @@ function getExchangeRate() {
         }
     });
 }
+
+function getRemittanceResult() {
+    var remittanceAmount = $('#remittanceAmount').val();
+    var recipientCountry = $('#recipientCountry').val();
+
+    $.ajax({
+        url: "/api/remittance-amount?remittanceCountry=USD&recipientCountry=" + recipientCountry
+        + "&amount=" + remittanceAmount,
+        method: "GET",
+        success: function (calculationResult) {
+            $('#remittanceResult').html("<p>수취금액은 " + calculationResult.amountReceivable + " " + recipientCountry + " 입니다.</p>");
+            $('#exchangeRate').text(calculationResult.exchangeRate + " " + recipientCountry + "/USD");
+        },
+        error: function (err) {
+            if(err.status === 400) {
+                alert("error 400 : Bad Request");
+            } else if(err.status === 500) {
+                alert("error 500 : " + err.responseText);
+            } else if(err.status === 404) {
+                alert("error 404 : Not Found");
+            }
+        }
+    });
+}
+
 </script>
 </html>
