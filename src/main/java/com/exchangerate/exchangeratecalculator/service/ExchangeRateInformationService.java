@@ -1,7 +1,7 @@
 package com.exchangerate.exchangeratecalculator.service;
 
-import com.exchangerate.exchangeratecalculator.dto.ExchangeRateDto;
+import com.exchangerate.exchangeratecalculator.dto.ExchangeRateApiResponse;
 
 public interface ExchangeRateInformationService {
-    ExchangeRateDto getExchangeRateDto();
+    ExchangeRateApiResponse getExchangeRateInformation();
 }
