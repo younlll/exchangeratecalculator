@@ -1,9 +1,7 @@
 package com.exchangerate.exchangeratecalculator.service;
 
 import com.exchangerate.exchangeratecalculator.dto.ExchangeRateApiResponse;
-import java.time.LocalDateTime;
 import java.util.HashMap;
-import java.util.Map;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +24,7 @@ public class LocalExchangeRateInformationServiceImpl implements ExchangeRateInfo
                 },
                 null
         );
-        
+
         return exchangeRateApiResponse;
     }
 }

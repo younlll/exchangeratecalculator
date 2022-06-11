@@ -35,7 +35,6 @@ public class ExchangeRateInformationServiceImpl implements ExchangeRateInformati
     }
 
 
-
     @Override
     public ExchangeRateApiResponse getExchangeRateInformation() {
         HttpHeaders headers = createHttpHeaders(accessKey);
