@@ -8,7 +8,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public class ExchangeRateApiResponse {
     private boolean success;
-    private int timestamp;
+    private long timestamp;
     private String source;
     private Map<String, Double> quotes;
     private Map<String, String> error;
