@@ -65,6 +65,8 @@ function getRemittanceResult() {
     var remittanceAmount = $('#remittanceAmount').val();
     var recipientCountry = $('#recipientCountry').val();
 
+    validAmount(remittanceAmount);
+
     $.ajax({
         url: "/api/remittance-amount?remittanceCountry=USD&recipientCountry=" + recipientCountry
         + "&amount=" + remittanceAmount,
@@ -85,5 +87,11 @@ function getRemittanceResult() {
     });
 }
 
+function validAmount(remittanceAmount) {
+    if(remittanceAmount < 0 || remittanceAmount > 10000) {
+        $('#remittanceResult').html("<p>송금액이 바르지 않습니다</p>");
+        throw new Error('송금액이 바르지 않습니다');
+    }
+}
 </script>
 </html>
