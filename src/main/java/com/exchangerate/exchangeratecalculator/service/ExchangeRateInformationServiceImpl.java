@@ -29,7 +29,8 @@ public class ExchangeRateInformationServiceImpl implements ExchangeRateInformati
     private final RestTemplate restTemplate;
 
     public ExchangeRateInformationServiceImpl(RestTemplateBuilder restTemplateBuilder) {
-        this.restTemplate = restTemplateBuilder.setReadTimeout(Duration.ofSeconds(5))
+        this.restTemplate = restTemplateBuilder
+                .setReadTimeout(Duration.ofSeconds(5))
                 .setConnectTimeout(Duration.ofSeconds(5))
                 .build();
     }
