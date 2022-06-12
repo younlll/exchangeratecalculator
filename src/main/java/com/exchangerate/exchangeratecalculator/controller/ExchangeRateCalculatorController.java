@@ -1,8 +1,8 @@
 package com.exchangerate.exchangeratecalculator.controller;
 
+import com.exchangerate.exchangeratecalculator.domain.Country;
 import com.exchangerate.exchangeratecalculator.dto.ExchangeRateRequest;
 import com.exchangerate.exchangeratecalculator.service.ExchangeRateCalculatorService;
-import com.exchangerate.exchangeratecalculator.service.ExchangeRateCalculatorServiceImpl;
 import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
@@ -44,7 +44,7 @@ public class ExchangeRateCalculatorController {
         return ResponseEntity.ok(calculationResult);
     }
 
-    private Double getExchangeRate(String remittanceCountry, String recipientCountry) {
+    private Double getExchangeRate(Country remittanceCountry, Country recipientCountry) {
         return currencyCalculatorService.getExchangeRate(remittanceCountry, recipientCountry);
     }
 }

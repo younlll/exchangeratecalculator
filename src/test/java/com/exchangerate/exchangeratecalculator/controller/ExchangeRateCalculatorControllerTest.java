@@ -2,6 +2,7 @@ package com.exchangerate.exchangeratecalculator.controller;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.exchangerate.exchangeratecalculator.domain.Country;
 import com.exchangerate.exchangeratecalculator.service.ExchangeRateCalculatorService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,16 +23,24 @@ class ExchangeRateCalculatorControllerTest {
     @Test
     void 환율_기본정보_가져오기_성공() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/exchange-rate")
-                    .param("remittanceCountry", "USD")
-                    .param("recipientCountry", "KRW"))
+                    .param("remittanceCountry", Country.USD.name())
+                    .param("recipientCountry", Country.KRW.name()))
                 .andExpect(status().isOk());
     }
 
     @Test
     void 환율_기본정보_가져오기_실패_404() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/exchange-rate1")
-                    .param("remittanceCountry", "USD")
-                    .param("recipientCountry", "KRW"))
+                    .param("remittanceCountry", Country.USD.name())
+                    .param("recipientCountry", Country.KRW.name()))
                 .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void 환율_기본정보_가져오기_실패_400() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/exchange-rate")
+                        .param("remittanceCountry", Country.USD.name())
+                        .param("recipientCountry", "KRM"))
+                .andExpect(status().isBadRequest());
     }
 }

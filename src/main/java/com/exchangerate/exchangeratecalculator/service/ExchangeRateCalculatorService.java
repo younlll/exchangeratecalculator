@@ -1,5 +1,7 @@
 package com.exchangerate.exchangeratecalculator.service;
 
+import com.exchangerate.exchangeratecalculator.domain.Country;
+
 public interface ExchangeRateCalculatorService {
-    Double getExchangeRate(String remittanceCountry, String recipientCountry);
+    Double getExchangeRate(Country remittanceCountry, Country recipientCountry);
 }
