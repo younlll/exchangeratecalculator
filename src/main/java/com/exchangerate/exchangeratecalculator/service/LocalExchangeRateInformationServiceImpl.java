@@ -11,7 +11,7 @@ public class LocalExchangeRateInformationServiceImpl implements ExchangeRateInfo
 
     @Override
     public ExchangeRateApiResponse getExchangeRateInformation() {
-        ExchangeRateApiResponse exchangeRateApiResponse = new ExchangeRateApiResponse(
+        return new ExchangeRateApiResponse(
                 true,
                 System.currentTimeMillis(),
                 "USD",
@@ -24,7 +24,5 @@ public class LocalExchangeRateInformationServiceImpl implements ExchangeRateInfo
                 },
                 null
         );
-
-        return exchangeRateApiResponse;
     }
 }
