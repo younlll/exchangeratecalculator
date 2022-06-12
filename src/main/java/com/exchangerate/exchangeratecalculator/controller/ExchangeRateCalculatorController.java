@@ -1,6 +1,7 @@
 package com.exchangerate.exchangeratecalculator.controller;
 
 import com.exchangerate.exchangeratecalculator.dto.ExchangeRateRequest;
+import com.exchangerate.exchangeratecalculator.service.ExchangeRateCalculatorService;
 import com.exchangerate.exchangeratecalculator.service.ExchangeRateCalculatorServiceImpl;
 import java.text.DecimalFormat;
 import java.util.HashMap;
@@ -19,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ExchangeRateCalculatorController {
     private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#,###.00");
 
-    private final ExchangeRateCalculatorServiceImpl currencyCalculatorService;
+    private final ExchangeRateCalculatorService currencyCalculatorService;
 
     @GetMapping("/exchange-rate")
     public ResponseEntity<String> getExchangeRate(@Valid @ModelAttribute ExchangeRateRequest exchangeRateRequest) {
