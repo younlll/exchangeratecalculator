@@ -47,7 +47,7 @@ function getExchangeRate() {
         url: "api/exchange-rate?remittanceCountry=USD&recipientCountry=" + recipientCountry,
         method: 'GET',
         success: function (exchangeRate) {
-            $('#exchangeRate').text(exchangeRate + " " + recipientCountry + "/USD");
+            $('#exchangeRate').text(exchangeRate.exchangeRate + " " + recipientCountry + "/USD");
         },
         error : function(err) {
             if(err.status === 400) {
@@ -72,7 +72,7 @@ function getRemittanceResult() {
         + "&amount=" + remittanceAmount,
         method: "GET",
         success: function (calculationResult) {
-            $('#remittanceResult').html("<p>수취금액은 " + calculationResult.amountReceivable + " " + recipientCountry + " 입니다.</p>");
+            $('#remittanceResult').html("<p>수취금액은 " + calculationResult.recipientAmount + " " + recipientCountry + " 입니다.</p>");
             $('#exchangeRate').text(calculationResult.exchangeRate + " " + recipientCountry + "/USD");
         },
         error: function (err) {

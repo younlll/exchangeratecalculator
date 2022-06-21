@@ -2,6 +2,7 @@ package com.exchangerate.exchangeratecalculator.controller;
 
 import com.exchangerate.exchangeratecalculator.domain.Country;
 import com.exchangerate.exchangeratecalculator.dto.ExchangeRateRequest;
+import com.exchangerate.exchangeratecalculator.dto.ExchangeRateResponse;
 import com.exchangerate.exchangeratecalculator.service.ExchangeRateCalculatorService;
 import java.text.DecimalFormat;
 import java.util.HashMap;
@@ -21,16 +22,19 @@ public class ExchangeRateCalculatorController {
     private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#,###.00");
 
     private final ExchangeRateCalculatorService currencyCalculatorService;
+    private final ExchangeRateResponse exchangeRateResponse = new ExchangeRateResponse();
 
     @GetMapping("/exchange-rate")
-    public ResponseEntity<String> getExchangeRate(@Valid @ModelAttribute ExchangeRateRequest exchangeRateRequest) {
+    public ResponseEntity<ExchangeRateResponse> getExchangeRate(
+            @Valid @ModelAttribute ExchangeRateRequest exchangeRateRequest) {
         Double exchangeRate = getExchangeRate(exchangeRateRequest.getRemittanceCountry(),
                 exchangeRateRequest.getRecipientCountry());
-        return ResponseEntity.ok(DECIMAL_FORMAT.format(exchangeRate));
+        exchangeRateResponse.setExchangeRate(DECIMAL_FORMAT.format(exchangeRate));
+        return ResponseEntity.ok(exchangeRateResponse);
     }
 
     @GetMapping("/remittance-amount")
-    public ResponseEntity<Map<String, String>> getExchangeRateCalculation(
+    public ResponseEntity<ExchangeRateResponse> getExchangeRateCalculation(
             @Valid @ModelAttribute ExchangeRateRequest exchangeRateRequest) {
         Map<String, String> calculationResult = new HashMap<>();
 
@@ -38,10 +42,10 @@ public class ExchangeRateCalculatorController {
                 exchangeRateRequest.getRecipientCountry());
         Double receptionAmount = exchangeRate * exchangeRateRequest.getAmount();
 
-        calculationResult.put("amountReceivable", DECIMAL_FORMAT.format(receptionAmount));
-        calculationResult.put("exchangeRate", DECIMAL_FORMAT.format(exchangeRate));
+        exchangeRateResponse.setRecipientAmount(DECIMAL_FORMAT.format(receptionAmount));
+        exchangeRateResponse.setExchangeRate(DECIMAL_FORMAT.format(exchangeRate));
 
-        return ResponseEntity.ok(calculationResult);
+        return ResponseEntity.ok(exchangeRateResponse);
     }
 
     private Double getExchangeRate(Country remittanceCountry, Country recipientCountry) {
