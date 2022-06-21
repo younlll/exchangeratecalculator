@@ -1,6 +1,5 @@
 package com.exchangerate.exchangeratecalculator.controller;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.exchangerate.exchangeratecalculator.domain.Country;
@@ -24,16 +23,16 @@ class ExchangeRateCalculatorControllerTest {
     @Test
     void 환율_기본정보_가져오기_성공() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/exchange-rate")
-                    .param("remittanceCountry", Country.USD.name())
-                    .param("recipientCountry", Country.KRW.name()))
+                        .param("remittanceCountry", Country.USD.name())
+                        .param("recipientCountry", Country.KRW.name()))
                 .andExpect(status().isOk());
     }
 
     @Test
     void 환율_기본정보_가져오기_실패_404() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/exchange-rate1")
-                    .param("remittanceCountry", Country.USD.name())
-                    .param("recipientCountry", Country.KRW.name()))
+                        .param("remittanceCountry", Country.USD.name())
+                        .param("recipientCountry", Country.KRW.name()))
                 .andExpect(status().isNotFound());
     }
 
@@ -48,9 +47,9 @@ class ExchangeRateCalculatorControllerTest {
     @Test
     void 송금국가에따른_환율_계산() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/remittance-amount")
-                    .param("remittanceCountry", Country.USD.name())
-                    .param("recipientCountry", Country.KRW.name())
-                    .param("amount", "10"))
+                        .param("remittanceCountry", Country.USD.name())
+                        .param("recipientCountry", Country.KRW.name())
+                        .param("amount", "10"))
                 .andExpect(status().isOk());
     }
 }

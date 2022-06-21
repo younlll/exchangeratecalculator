@@ -7,7 +7,7 @@ import com.exchangerate.exchangeratecalculator.dto.ExchangeRateApiResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ActiveProfiles;
 
-@ActiveProfiles("local")
+@ActiveProfiles("notalpha")
 class LocalExchangeRateInformationServiceImplTest {
 
     private final LocalExchangeRateInformationServiceImpl localExchangeRateInformationService = new LocalExchangeRateInformationServiceImpl();

@@ -1,7 +1,9 @@
 package com.exchangerate.exchangeratecalculator.service;
 
+import com.exchangerate.exchangeratecalculator.dto.ApiRequestProperties;
 import com.exchangerate.exchangeratecalculator.dto.ExchangeRateApiResponse;
 import java.time.Duration;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Profile;
@@ -15,17 +17,11 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @Service
-@Profile("!local")
+@Profile("alpha")
 public class ExchangeRateInformationServiceImpl implements ExchangeRateInformationService {
-    @Value("${currencyLayer.accessKey}")
-    private String accessKey;
-    @Value("${currencyLayer.endPoint}")
-    private String endPoint;
-    @Value("${currencyLayer.remittance}")
-    private String source;
-    @Value("${currencyLayer.currencies}")
-    private String currencies;
 
+    @Autowired
+    ApiRequestProperties apiRequestProperties;
     private final RestTemplate restTemplate;
 
     public ExchangeRateInformationServiceImpl(RestTemplateBuilder restTemplateBuilder) {
@@ -38,7 +34,7 @@ public class ExchangeRateInformationServiceImpl implements ExchangeRateInformati
 
     @Override
     public ExchangeRateApiResponse getExchangeRateInformation() {
-        HttpHeaders headers = createHttpHeaders(accessKey);
+        HttpHeaders headers = createHttpHeaders(apiRequestProperties.getAccessKey());
         HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
         String uri = createUri();
         ResponseEntity<ExchangeRateApiResponse> response = restTemplate.exchange(
@@ -49,9 +45,9 @@ public class ExchangeRateInformationServiceImpl implements ExchangeRateInformati
     }
 
     private String createUri() {
-        return UriComponentsBuilder.fromHttpUrl(endPoint)
-                .queryParam("source", source)
-                .queryParam("currencies", currencies)
+        return UriComponentsBuilder.fromHttpUrl(apiRequestProperties.getEndPoint())
+                .queryParam("source", apiRequestProperties.getRemittance())
+                .queryParam("currencies", apiRequestProperties.getCurrencies())
                 .build(false)
                 .toString();
     }
