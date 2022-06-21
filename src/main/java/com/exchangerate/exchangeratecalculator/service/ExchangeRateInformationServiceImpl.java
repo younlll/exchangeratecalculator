@@ -2,10 +2,7 @@ package com.exchangerate.exchangeratecalculator.service;
 
 import com.exchangerate.exchangeratecalculator.dto.ApiRequestProperties;
 import com.exchangerate.exchangeratecalculator.dto.ExchangeRateApiResponse;
-import java.time.Duration;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -20,17 +17,15 @@ import org.springframework.web.util.UriComponentsBuilder;
 @Profile("alpha")
 public class ExchangeRateInformationServiceImpl implements ExchangeRateInformationService {
 
-    @Autowired
-    ApiRequestProperties apiRequestProperties;
+    private final ApiRequestProperties apiRequestProperties;
     private final RestTemplate restTemplate;
 
-    public ExchangeRateInformationServiceImpl(RestTemplateBuilder restTemplateBuilder) {
-        this.restTemplate = restTemplateBuilder
-                .setReadTimeout(Duration.ofSeconds(5))
-                .setConnectTimeout(Duration.ofSeconds(5))
-                .build();
+    @Autowired
+    public ExchangeRateInformationServiceImpl(
+            ApiRequestProperties apiRequestProperties, RestTemplate restTemplate) {
+        this.apiRequestProperties = apiRequestProperties;
+        this.restTemplate = restTemplate;
     }
-
 
     @Override
     public ExchangeRateApiResponse getExchangeRateInformation() {
