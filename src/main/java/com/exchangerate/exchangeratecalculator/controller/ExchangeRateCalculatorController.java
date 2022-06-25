@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,7 +34,7 @@ public class ExchangeRateCalculatorController {
         return ResponseEntity.ok(exchangeRateResponse);
     }
 
-    @GetMapping("/remittance-amount")
+    @PostMapping("/remittance-amount")
     public ResponseEntity<ExchangeRateResponse> getExchangeRateCalculation(
             @Valid @ModelAttribute ExchangeRateRequest exchangeRateRequest) {
         Map<String, String> calculationResult = new HashMap<>();
